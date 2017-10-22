@@ -4,12 +4,32 @@ inicio
 	>>  johni : Inteiro;
 	>>  johni : Inteiro;
 	>>  johni : Inteiro;
-
-    para 1 ate 10 faca 
-        valor <- valor * 10
+    >>  marcelo : Inteiro;
+    >>  valor : Inteiro;
+    
+    marcelo <- 19;
+    valor <- 1;
+    
+    para valor ate marcelo faca {
+    	se valor < 12 faca
+    	  imprimir('Criança')
+    	senaose valor < 18 faca
+    	  imprimir('Adolescente')
+        senaose valor < 65 faca
+          imprimir('Adulto')
+        senao faca
+          imprimir('Idoso')
+    }
+    
+    
+    para 1 ate 10 faca {
+    	valor <- valor * 10
+    }
+    
         
-    para 1 ate 10 faca 
+    para 1 ate 10 faca  
         valor <- valor * 10
+    
         
     func ola(e,r)
 fim

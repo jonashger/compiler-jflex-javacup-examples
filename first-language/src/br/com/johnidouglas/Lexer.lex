@@ -36,6 +36,7 @@ import java_cup.runtime.*;
 DIGITO = [0-9]
 INTEIRO = {DIGITO}+
 IDENTIFICADOR = [A-Za-z_][A-Za-z_0-9]*
+MENSAGEM = '([^' ]*)'
 ESPACO_EM_BRANCO = [\n|\s|\t\r]
 
 %%
@@ -53,7 +54,16 @@ ESPACO_EM_BRANCO = [\n|\s|\t\r]
 	";"         { return symbol(Sym.PONTO_E_VIRGULA); }
 	":"        	{ return symbol(Sym.DOIS_PONTOS); }
 	"Inteiro"   { return symbol(Sym.TIPO_INTEIRO); }
-	"func"   { return symbol(Sym.FUNCAO); }
+	"func"      { return symbol(Sym.FUNCAO); }
+	"se"        { return symbol(Sym.SE); }
+	"senaose"   { return symbol(Sym.SENAOSE); }
+	"senao"     { return symbol(Sym.SENAO); }
+	">"         { return symbol(Sym.MAIOR); }
+	"<"         { return symbol(Sym.MENOR); }
+	"{"         { return symbol(Sym.ABRE_CHAVE); }
+	"}"         { return symbol(Sym.FECHA_CHAVE); }
+	"imprimir"  { return symbol(Sym.IMPRIMIR); }
+	
 	
 	"("   { return symbol(Sym.ABRE_PARENTESES); }
 	")"   { return symbol(Sym.FECHA_PARENTESES); }
@@ -63,6 +73,7 @@ ESPACO_EM_BRANCO = [\n|\s|\t\r]
 	":"	{ return symbol(Sym.INICIO); }
 	
 	{INTEIRO} 		{ return symbol(Sym.NUMERO, new Integer(yytext())); 		}
+	{MENSAGEM}      { return symbol(Sym.MENSAGEM); }
 	{IDENTIFICADOR}	{ return symbol(Sym.ID); 	}
 	
 	{ESPACO_EM_BRANCO}	{}

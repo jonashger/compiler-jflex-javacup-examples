@@ -18,9 +18,11 @@ parser code {:
 :};
 
 terminal INICIO, FIM, PARA, ATE, FACA, NUMERO, ID, MULTIPLICACAO, ATRIBUICAO, VARIAVEL, PONTO_E_VIRGULA; 
-terminal DOIS_PONTOS, TIPO_INTEIRO, FUNCAO, ABRE_PARENTESES, FECHA_PARENTESES, VIRGULA;
+terminal DOIS_PONTOS, TIPO_INTEIRO, FUNCAO, ABRE_PARENTESES, FECHA_PARENTESES, VIRGULA, ABRE_CHAVE, FECHA_CHAVE;
+terminal SE, SENAO, MAIOR, MENOR, IMPRIMIR, MENSAGEM, SENAOSE;
 
-non terminal programa, laco, bloco, declaracoes, lacos, variavel, funcao, funcao_parametros;
+non terminal programa, laco, bloco, declaracoes, variavel, funcao, funcao_parametros, laco_bloco, laco_conteudo;
+non terminal atribui_valor_variavel, condicao, condicao_conteudo, imprime_mensagem;
 
 start with programa;
 
@@ -28,10 +30,33 @@ programa ::= INICIO bloco FIM;
 
 bloco ::= bloco declaracoes | declaracoes;
 
-declaracoes ::= laco | variavel | funcao;
+declaracoes ::= laco | variavel | funcao | atribui_valor_variavel | condicao;
 
-laco ::= PARA NUMERO ATE NUMERO FACA ID ATRIBUICAO ID MULTIPLICACAO NUMERO;
+laco ::= PARA NUMERO ATE NUMERO FACA laco_bloco;
+laco ::= PARA ID ATE ID FACA laco_bloco;
+
+laco_bloco ::= ABRE_CHAVE laco_conteudo FECHA_CHAVE;
+laco_bloco ::= laco_conteudo;
+
+laco_conteudo ::= ID ATRIBUICAO ID MULTIPLICACAO NUMERO;
+laco_conteudo ::= condicao FACA condicao_conteudo;
+laco_conteudo ::= SE condicao FACA condicao_conteudo SENAOSE condicao FACA condicao_conteudo SENAOSE condicao FACA condicao_conteudo SENAO FACA condicao_conteudo;
+
+condicao_conteudo ::= IMPRIMIR ABRE_PARENTESES imprime_mensagem FECHA_PARENTESES;
+
+imprime_mensagem ::= MENSAGEM;
+
+condicao ::= ID MENOR NUMERO;
+condicao ::= ID MENOR ID;
+condicao ::= NUMERO MENOR NUMERO;
+condicao ::= ID MAIOR NUMERO;
+condicao ::= ID MAIOR ID;
+condicao ::= NUMERO MAIOR NUMERO;
+
+
 variavel ::= VARIAVEL ID DOIS_PONTOS TIPO_INTEIRO PONTO_E_VIRGULA;
+atribui_valor_variavel ::= ID ATRIBUICAO NUMERO PONTO_E_VIRGULA;
+
 
 funcao ::= FUNCAO ID ABRE_PARENTESES funcao_parametros FECHA_PARENTESES;
 funcao_parametros ::= funcao_parametros VIRGULA ID | ID | ;
